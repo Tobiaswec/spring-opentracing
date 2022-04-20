@@ -1,0 +1,42 @@
+version: '3.1'
+services:
+  recipe_db:
+    image: mysql:latest
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    networks:
+      - default_net
+
+  persistence-backend:
+    depends_on:
+      - recipe_db
+    build:
+      context: persistence-service/.
+    image: persistence_service
+    ports:
+      - 8888:8888
+    networks:
+      - default_net
+
+  interaction-service:
+    depends_on:
+      - persistence-backend
+    build:
+      context: user-interaction-service/.
+    image: interaction-service
+    ports:
+      - 8080:8080
+    networks:
+      - default_net
+
+networks:
+  default_net:
+    driver: bridge
