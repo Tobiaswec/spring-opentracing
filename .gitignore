@@ -1,9 +1,12 @@
 # Compiled class file
 *.class
-
+*.idea
+.idea
+*.mysql-data
+.mysql-data
+.gradle
 # Log file
 *.log
-
 # BlueJ files
 *.ctxt
 
