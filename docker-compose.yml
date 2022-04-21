@@ -7,36 +7,40 @@ services:
     restart: always
     ports:
       - 3306:3306
+    container_name: recipe_db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: root
       MYSQL_USER: user
       MYSQL_PASSWORD: user
     networks:
-      - default_net
+      - db_net
 
   persistence-backend:
     depends_on:
       - recipe_db
     build:
-      context: persistence-service/.
+      context: ../opentracing/persistence-service
     image: persistence_service
     ports:
       - 8888:8888
     networks:
-      - default_net
+      - services_net
+      - db_net
 
   interaction-service:
     depends_on:
       - persistence-backend
     build:
-      context: user-interaction-service/.
+      context: ../opentracing/user-interaction-service
     image: interaction-service
     ports:
       - 8080:8080
     networks:
-      - default_net
+      - services_net
 
 networks:
-  default_net:
+  db_net:
+    driver: bridge
+  services_net:
     driver: bridge
