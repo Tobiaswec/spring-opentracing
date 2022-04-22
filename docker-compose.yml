@@ -32,6 +32,7 @@ services:
     build:
       context: ../opentracing/persistence-service
     image: persistence_service
+    container_name: persistence-service
     ports:
       - 8888:8888
     networks:
@@ -45,6 +46,7 @@ services:
     build:
       context: ../opentracing/user-interaction-service
     image: interaction-service
+    container_name: interaction-service
     ports:
       - 8080:8080
     networks:
