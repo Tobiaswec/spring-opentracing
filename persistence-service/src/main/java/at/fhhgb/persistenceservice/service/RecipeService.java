@@ -24,8 +24,11 @@ public class RecipeService {
     }
 
     public boolean delete(int recipeId) {
-        recipeRepository.deleteById(recipeId);
-        return true;
+        if(recipeRepository.existsById(recipeId)){
+            recipeRepository.deleteById(recipeId);
+            return true;
+        }
+        return false;
     }
 
     public RecipeEntity persistRecipe(RecipeEntity recipe) {
