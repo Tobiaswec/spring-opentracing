@@ -17,7 +17,7 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/html")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE, path = "/html")
     public String getRecipesHTML(@RequestParam String type){
         RecipeType recipeType;
         try {
