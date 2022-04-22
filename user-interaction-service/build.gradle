@@ -25,7 +25,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//HTML template
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.6.6'
+	//jaeger
+	implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

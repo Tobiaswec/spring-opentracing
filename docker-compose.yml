@@ -1,5 +1,14 @@
 version: '3.1'
 services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    networks:
+      - jaeger_net
+
   recipe_db:
     image: mysql:latest
     volumes:
@@ -15,6 +24,7 @@ services:
       MYSQL_PASSWORD: user
     networks:
       - db_net
+      - jaeger_net
 
   persistence-backend:
     depends_on:
@@ -22,11 +32,13 @@ services:
     build:
       context: ../opentracing/persistence-service
     image: persistence_service
+    container_name: persistence-service
     ports:
       - 8888:8888
     networks:
       - services_net
       - db_net
+      - jaeger_net
 
   interaction-service:
     depends_on:
@@ -34,13 +46,17 @@ services:
     build:
       context: ../opentracing/user-interaction-service
     image: interaction-service
+    container_name: interaction-service
     ports:
       - 8080:8080
     networks:
       - services_net
+      - jaeger_net
 
 networks:
   db_net:
     driver: bridge
   services_net:
+    driver: bridge
+  jaeger_net:
     driver: bridge
