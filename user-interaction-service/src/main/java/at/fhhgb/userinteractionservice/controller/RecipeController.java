@@ -17,15 +17,16 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE, path = "/html")
-    public String getRecipesHTML(@RequestParam String type){
-        RecipeType recipeType;
-        try {
-            recipeType = RecipeType.valueOf(type);
-        }catch (IllegalArgumentException e){
-            recipeType = RecipeType.ALL;
-        }
-        return recipeService.getRecipesHtml(recipeType);
+   // @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE, path = "/html")
+    @GetMapping("/html")
+    public String getRecipesHTML(){
+//        RecipeType recipeType;
+//        try {
+//            recipeType = RecipeType.valueOf(type);
+//        }catch (IllegalArgumentException e){
+//            recipeType = RecipeType.ALL;
+//        }
+        return recipeService.getRecipesHtml(RecipeType.ALL);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
