@@ -5,6 +5,7 @@ import at.fhhgb.userinteractionservice.dto.RecipeDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,9 @@ import java.util.Optional;
 @Component
 public class RecipeRestTemplate {
 
+    @Value("${persistence-service}")
+    private String baseUrl;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     private RestTemplate rest = new RestTemplate();
@@ -28,7 +32,7 @@ public class RecipeRestTemplate {
     public List<RecipeDto> getRecipes(RecipeType recipeType)
     {
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl("http://localhost:8888/api/recipe")
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(baseUrl+"/api/recipe")
                 .queryParam("type", "{type}")
                 .encode()
                 .toUriString();
@@ -45,7 +49,7 @@ public class RecipeRestTemplate {
 
     public Boolean deleteRecipe(int recipeId) {
         try {
-            return rest.exchange("http://localhost:8888/api/recipe/" + recipeId, HttpMethod.DELETE, null, Boolean.class).getBody();
+            return rest.exchange(baseUrl+"/api/recipe/" + recipeId, HttpMethod.DELETE, null, Boolean.class).getBody();
         } catch (RestClientException ex) {
             logger.error("deleteRecipe()", ex);
             return false;
@@ -55,7 +59,7 @@ public class RecipeRestTemplate {
     public Optional<RecipeDto> postRecipe(RecipeCreationDto recipe) {
         try {
             HttpEntity<RecipeCreationDto> requestEntity = new HttpEntity<>(recipe);
-            return Optional.ofNullable(rest.exchange("http://localhost:8888/api/recipe/", HttpMethod.POST, requestEntity, RecipeDto.class).getBody());
+            return Optional.ofNullable(rest.exchange(baseUrl+"/api/recipe/", HttpMethod.POST, requestEntity, RecipeDto.class).getBody());
         } catch (RestClientException ex) {
             logger.error("postRecipe()", ex);
             return Optional.empty();
