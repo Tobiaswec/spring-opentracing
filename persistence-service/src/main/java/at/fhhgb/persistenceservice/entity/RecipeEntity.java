@@ -35,8 +35,7 @@ public class RecipeEntity {
     public RecipeEntity() {
     }
 
-    public RecipeEntity(int id, String title, List<String> ingredients, String description, String url, String imageUrl, String type) {
-        this.id = id;
+    public RecipeEntity(String title, List<String> ingredients, String description, String url, String imageUrl, String type) {
         this.title = title;
         this.ingredients = ingredients;
         this.description = description;

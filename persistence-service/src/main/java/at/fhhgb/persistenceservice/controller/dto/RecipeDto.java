@@ -14,6 +14,6 @@ public class RecipeDto {
     String type;
 
     public RecipeEntity toEntity() {
-        return new RecipeEntity(-1,title,ingredients,description,url,imageUrl,type);
+        return new RecipeEntity(title,ingredients,description,url,imageUrl,type);
     }
 }
