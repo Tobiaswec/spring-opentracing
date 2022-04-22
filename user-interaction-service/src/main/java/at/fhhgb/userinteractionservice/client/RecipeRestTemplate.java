@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +27,14 @@ public class RecipeRestTemplate {
 
     public List<RecipeDto> getRecipes(RecipeType recipeType)
     {
+
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl("http://localhost:8888/api/recipe")
+                .queryParam("type", "{type}")
+                .encode()
+                .toUriString();
+
         try {
-            return rest.exchange("http://localhost:8888/api/recipe", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeDto>>() {
+            return rest.exchange(urlTemplate, HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeDto>>() {
             }, Map.of("type",recipeType.name())).getBody();
         }catch (RestClientException ex){
             logger.error("getRecipes()",ex);
