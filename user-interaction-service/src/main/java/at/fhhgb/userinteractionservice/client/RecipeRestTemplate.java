@@ -1,11 +1,10 @@
 package at.fhhgb.userinteractionservice.client;
 
+import at.fhhgb.userinteractionservice.dto.RecipeCreationDto;
 import at.fhhgb.userinteractionservice.dto.RecipeDto;
-import at.fhhgb.userinteractionservice.dto.RecipeEntity;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -25,10 +24,10 @@ public class RecipeRestTemplate {
 
     private RestTemplate rest = new RestTemplate();
 
-    public List<RecipeDto> getRecipes(RecipeType recipeType)
+    public List<RecipeCreationDto> getRecipes(RecipeType recipeType)
     {
         try {
-            return rest.exchange("http://localhost:8888/api/recipe", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeDto>>() {
+            return rest.exchange("http://localhost:8888/api/recipe", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeCreationDto>>() {
             }, Map.of("type",recipeType.name())).getBody();
         }catch (RestClientException ex){
             logger.error("getRecipes()",ex);
@@ -46,10 +45,10 @@ public class RecipeRestTemplate {
         }
     }
 
-    public Optional<RecipeEntity> postRecipe(RecipeDto recipe) {
+    public Optional<RecipeDto> postRecipe(RecipeCreationDto recipe) {
         try {
-            HttpEntity<RecipeDto> requestEntity = new HttpEntity<>(recipe);
-            return Optional.ofNullable(rest.exchange("http://localhost:8888/api/recipe/", HttpMethod.POST, requestEntity, RecipeEntity.class).getBody());
+            HttpEntity<RecipeCreationDto> requestEntity = new HttpEntity<>(recipe);
+            return Optional.ofNullable(rest.exchange("http://localhost:8888/api/recipe/", HttpMethod.POST, requestEntity, RecipeDto.class).getBody());
         } catch (RestClientException ex) {
             logger.error("postRecipe()", ex);
             return Optional.empty();

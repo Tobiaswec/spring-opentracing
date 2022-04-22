@@ -1,6 +1,6 @@
 package at.fhhgb.userinteractionservice.controller;
 
-import at.fhhgb.userinteractionservice.dto.RecipeDto;
+import at.fhhgb.userinteractionservice.dto.RecipeCreationDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import at.fhhgb.userinteractionservice.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class RecipeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity persistRecipe(@RequestBody RecipeDto recipe){
+    public ResponseEntity persistRecipe(@RequestBody RecipeCreationDto recipe){
         return recipeService.persistRecipe(recipe);
     }
 
