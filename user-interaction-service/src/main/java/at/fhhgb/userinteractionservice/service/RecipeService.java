@@ -4,6 +4,7 @@ import at.fhhgb.userinteractionservice.client.RecipeRestTemplate;
 import at.fhhgb.userinteractionservice.dto.RecipeCreationDto;
 import at.fhhgb.userinteractionservice.dto.RecipeDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
+import at.fhhgb.userinteractionservice.service.helper.HtmlTemplateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,15 @@ public class RecipeService {
     @Autowired
     private RecipeRestTemplate template;
 
-    public ResponseEntity<List<RecipeCreationDto>> getRecipes(RecipeType recipeType) {
-        return new ResponseEntity<List<RecipeCreationDto>>(template.getRecipes(recipeType),HttpStatus.OK);
+    @Autowired
+    private HtmlTemplateHelper htmlTemplateHelper;
+
+    public String getRecipesHtml(RecipeType recipeType){
+        return htmlTemplateHelper.generateRecipeListHtml(template.getRecipes(recipeType));
+    }
+
+    public ResponseEntity<List<RecipeDto>> getRecipes(RecipeType recipeType) {
+        return new ResponseEntity<List<RecipeDto>>(template.getRecipes(recipeType),HttpStatus.OK);
     }
 
     public ResponseEntity<String> delete(int recipeId) {

@@ -24,10 +24,10 @@ public class RecipeRestTemplate {
 
     private RestTemplate rest = new RestTemplate();
 
-    public List<RecipeCreationDto> getRecipes(RecipeType recipeType)
+    public List<RecipeDto> getRecipes(RecipeType recipeType)
     {
         try {
-            return rest.exchange("http://localhost:8888/api/recipe", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeCreationDto>>() {
+            return rest.exchange("http://localhost:8888/api/recipe", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeDto>>() {
             }, Map.of("type",recipeType.name())).getBody();
         }catch (RestClientException ex){
             logger.error("getRecipes()",ex);
