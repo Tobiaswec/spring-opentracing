@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 @RestController
 @RequestMapping("/recipe")
@@ -15,6 +16,17 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/html")
+    public String getRecipesHTML(@RequestParam String type){
+        RecipeType recipeType;
+        try {
+            recipeType = RecipeType.valueOf(type);
+        }catch (IllegalArgumentException e){
+            recipeType = RecipeType.ALL;
+        }
+        return recipeService.getRecipesHtml(recipeType);
+    }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getRecipes(@RequestParam String type){
