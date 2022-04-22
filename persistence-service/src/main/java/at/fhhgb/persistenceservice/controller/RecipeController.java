@@ -19,7 +19,7 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RecipeEntity>> getRecipes(@RequestParam String type){
         RecipeType recipeType = RecipeType.ALL;
         try {
@@ -30,12 +30,12 @@ public class RecipeController {
         return new ResponseEntity<>(recipeService.getRecipes(recipeType), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public RecipeEntity persistRecipe(@RequestBody RecipeDto recipe){
         return recipeService.persistRecipe(recipe.toEntity());
     }
 
-    @RequestMapping(method = RequestMethod.DELETE,path = "{recipeId}")
+    @DeleteMapping(path = "{recipeId}")
     public Boolean deleteRecipe(@PathVariable int recipeId){
         return recipeService.delete(recipeId);
     }
