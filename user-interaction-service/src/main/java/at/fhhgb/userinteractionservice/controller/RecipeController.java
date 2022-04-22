@@ -1,6 +1,6 @@
 package at.fhhgb.userinteractionservice.controller;
 
-import at.fhhgb.userinteractionservice.dto.RecipeDto;
+import at.fhhgb.userinteractionservice.dto.RecipeCreationDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import at.fhhgb.userinteractionservice.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,18 @@ public class RecipeController {
         try {
             recipeType = RecipeType.valueOf(type);
             }catch (IllegalArgumentException e){
-            return new ResponseEntity("Type invalid",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Type invalid",HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(recipeService.getRecipes(recipeType),HttpStatus.OK);
+        return recipeService.getRecipes(recipeType);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public RecipeDto persistRecipe(@RequestBody RecipeDto recipe){
+    public ResponseEntity persistRecipe(@RequestBody RecipeCreationDto recipe){
         return recipeService.persistRecipe(recipe);
     }
 
     @RequestMapping(method = RequestMethod.DELETE,path = "{recipeId}")
-    public ResponseEntity deleteRecipe(@PathVariable int recipeId){
-        return new ResponseEntity(recipeService.delete(recipeId), HttpStatus.CREATED);
+    public ResponseEntity<String> deleteRecipe(@PathVariable int recipeId){
+        return recipeService.delete(recipeId);
     }
 }
