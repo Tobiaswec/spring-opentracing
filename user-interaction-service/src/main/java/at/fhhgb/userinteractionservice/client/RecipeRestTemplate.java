@@ -46,6 +46,20 @@ public class RecipeRestTemplate {
         }
     }
 
+    public RecipeDto getRecipe(int id){
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(baseUrl+"/api/recipe/"+id)
+                .encode()
+                .toUriString();
+
+        try {
+            return rest.getForObject(urlTemplate,RecipeDto.class);
+        }catch (RestClientException ex){
+            logger.error("getRecipes()",ex);
+            return null;
+        }
+
+    }
+
 
     public Boolean deleteRecipe(int recipeId) {
         try {

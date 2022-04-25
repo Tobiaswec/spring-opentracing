@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <a th:href="@{~/api/recipe/html}"> Back to Overview</a>
+    <h1 th:text="${recipe.title}"></h1>
+
+        <div th:switch="${recipe.type}">
+            <span th:case="'VEGETARIAN'" class="badge badge-success" th:text="${recipe.type}"></span>
+            <span th:case="'MEAT'" class="badge badge-danger" th:text="${recipe.type}"></span>
+        </div>
+
+            <img th:src="${recipe.imageUrl}" class="card-img" alt="...">
+
+
+
+            <h3 class="my-3">Description</h3>
+            <p th:text="${recipe.description}"></p>
+            <h3 class="my-3">Ingredients </h3>
+            <ul>
+                <li th:each="in: ${recipe.ingredients}" th:text="${in}"></li>
+            </ul>
+
+
+</div>
+</body>
+</html>

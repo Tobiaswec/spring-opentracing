@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -21,6 +22,11 @@ public class RecipeService {
         } else {
             return recipeRepository.findAll();
         }
+    }
+
+    public Optional<RecipeEntity>getRecipe(int id){
+
+        return recipeRepository.findById(id);
     }
 
     public boolean delete(int recipeId) {
