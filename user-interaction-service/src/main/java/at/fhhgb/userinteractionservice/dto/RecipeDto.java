@@ -1,5 +1,6 @@
 package at.fhhgb.userinteractionservice.dto;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,12 @@ public class RecipeDto {
     String url;
     String imageUrl;
     String type;
+    OffsetDateTime date;
 
     public RecipeDto() {
     }
 
-    public RecipeDto(int id, String title, List<String> ingredients, String description, String url, String imageUrl, String type) {
+    public RecipeDto(int id, String title, List<String> ingredients, String description, String url, String imageUrl, String type, OffsetDateTime date) {
         this.id = id;
         this.title = title;
         this.ingredients = ingredients;
@@ -25,6 +27,15 @@ public class RecipeDto {
         this.url = url;
         this.imageUrl = imageUrl;
         this.type = type;
+        this.date=date;
+    }
+
+    public OffsetDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(OffsetDateTime date) {
+        this.date = date;
     }
 
     public int getId() {

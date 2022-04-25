@@ -22,7 +22,8 @@ public class InitialDataLoader {
     public void loadInitialData(){
 
         RecipeEntity r1= new RecipeEntity("Eierreis", Arrays.asList("Eier", "Reis"),"mix ois","www.google.at", "https://images.ichkoche.at/data/image/variations/620x434/9/gebratener-eierreis-mit-gemuese-und-cashewkernen-img-86415.jpg", RecipeType.VEGETARIAN.name());
-
+        RecipeEntity r2= new RecipeEntity("Eierreis", Arrays.asList("Eier", "Reis"),"mix ois","www.google.at", "https://images.ichkoche.at/data/image/variations/620x434/9/gebratener-eierreis-mit-gemuese-und-cashewkernen-img-86415.jpg", RecipeType.MEAT.name());
         recipeRepository.save(r1);
+        recipeRepository.save(r2);
     }
 }
