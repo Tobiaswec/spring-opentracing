@@ -23,8 +23,13 @@ public class RecipeService {
     private HtmlTemplateHelper htmlTemplateHelper;
 
     public String getRecipesHtml(RecipeType recipeType){
-        return htmlTemplateHelper.generateRecipeListHtml(template.getRecipes(recipeType));
+        return htmlTemplateHelper.generateRecipeListHtml(template.getRecipes(recipeType),recipeType);
     }
+
+    public String getRecipeHtml(int id){
+        return htmlTemplateHelper.generateRecipeHtml(template.getRecipe(id));
+    }
+
 
     public ResponseEntity<List<RecipeDto>> getRecipes(RecipeType recipeType) {
         return new ResponseEntity<List<RecipeDto>>(template.getRecipes(recipeType),HttpStatus.OK);
@@ -38,6 +43,12 @@ public class RecipeService {
         Optional<RecipeDto> entity = template.postRecipe(recipe);
         return entity.map(recipeDto -> new ResponseEntity(recipeDto, HttpStatus.CREATED)).orElseGet(()
                 -> new ResponseEntity("Could not save Recipe", HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    public ResponseEntity<Optional<RecipeDto>> getRecipe(int id){
+        Optional<RecipeDto> entity=Optional.of(template.getRecipe(id));
+        return entity.map(recipeDto -> new ResponseEntity(recipeDto, HttpStatus.OK)).orElseGet(()
+                -> new ResponseEntity("Could not get Recipe with id="+id, HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
 

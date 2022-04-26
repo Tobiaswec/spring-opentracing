@@ -3,6 +3,8 @@ package at.fhhgb.persistenceservice.entity;
 import at.fhhgb.persistenceservice.util.StringCommaConverter;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,9 @@ public class RecipeEntity {
 
     @Column(name="type")
     String type;
+
+    @Column(name="date")
+    OffsetDateTime date=OffsetDateTime.now();
 
     public RecipeEntity() {
     }

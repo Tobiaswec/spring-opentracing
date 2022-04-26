@@ -1,28 +1,123 @@
 <!DOCTYPE html>
+
+<style>
+
+    form{
+        width:30%;
+        margin: 40px;
+    }
+</style>
+
+<script>
+
+    var count=0;
+    function test (){
+
+        var input = document.createElement("input");
+
+        input.setAttribute('type', 'text');
+        input.setAttribute('id', "ingredient"+count);
+        input.setAttribute('class', "form-control");
+
+       // document.getElementById('newRecipe').innerHTML+="<input id='ingredient"+count +"' type='text' class='form-control' width='20%'/>";
+        document.getElementById('newRecipe').appendChild(input);
+        count++;
+    }
+
+</script>
+<style>
+
+    .recipeCard{
+        margin:10px;
+    }
+    .recipeCard img{
+        margin:10px;
+    }
+
+    .btn-info{
+        margin:20px;
+    }
+
+    .header{
+        margin: 20px;
+    }
+</style>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <head>
-        <h1>RECIPE LIST</h1>
+            <div class="header">
+            <h1>RECIPE LIST</h1>
+
+            <h4>selected filter:</h4>
+            <h4 th:text="${type}"></h4>
+            <a th:href="@{~/api/recipe/html/ALL}"> ALL</a>
+            <a th:href="@{~/api/recipe/html/VEGETARIAN}"> VEGETARIAN</a>
+            <a th:href="@{~/api/recipe/html/VEGAN}"> VEGAN</a>
+        </div>
     </head>
 
 
+
+
     <body>
-        <div th:each="recipe: ${recipes}" class="card mb-3" style="max-width: 540px;">
+
+
+
+        <div th:each="recipe: ${recipes}" class="card mb-3 recipeCard" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img th:src="${recipe.imageUrl}" class="card-img" alt="...">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-5">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${recipe.title}"></h5>
-                        <p class="card-text" th:text="${recipe.description}"></p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <h4 class="card-title" th:text="${recipe.title}"></h4>
+                        <div th:switch="${recipe.type}">
+                            <span th:case="'VEGETARIAN'" class="badge badge-success" th:text="${recipe.type}"></span>
+                            <span th:case="'MEAT'" class="badge badge-danger" th:text="${recipe.type}"></span>
+                        </div>
+                        <a th:href="@{~/api/recipe/html/details/{id}(id=${recipe.id})}"> Information</a>
+                        <p class="card-text"><small class="text-muted" th:text="${recipe.date}"></small></p>
                     </div>
+
+
                 </div>
+                <div class="col-md-3" >
+                    <form th:action="@{~/api/recipe/html/{id}(id=${recipe.id})}" th:method="delete">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+
             </div>
         </div>
+
+        <form th:action="@{~/api/recipe}" th:object="${recipeForm}" method="post" >
+            <h3>Add new Recipe</h3>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title"  placeholder="Title" th:field="*{title}">
+            </div>
+            <div class="form-group">
+                <label for="desc">Description</label>
+                <input type="text" class="form-control" id="desc" placeholder="Description" th:field="*{description}">
+            </div>
+
+            <div class="form-group">
+                <label for="url">Description</label>
+                <input type="text" class="form-control" id="url" placeholder="URL" th:field="*{url}">
+            </div>
+<!--            <div class="form-group" id="newRecipe">-->
+<!--                <label for="ingredient0">Inc</label>-->
+<!--                <button class="btn btn-success" onclick="test()">+</button>-->
+<!--                <input type="text" class="form-control" id="ingredient0" width='20%' placeholder="Ingredients">-->
+
+<!--            </div>-->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
     </body>
 
 

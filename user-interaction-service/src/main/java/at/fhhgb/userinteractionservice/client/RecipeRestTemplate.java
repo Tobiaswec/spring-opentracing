@@ -5,6 +5,7 @@ import at.fhhgb.userinteractionservice.dto.RecipeDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -27,7 +28,8 @@ public class RecipeRestTemplate {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    private RestTemplate rest = new RestTemplate();
+    @Autowired
+    private RestTemplate rest;
 
     public List<RecipeDto> getRecipes(RecipeType recipeType)
     {
@@ -44,6 +46,20 @@ public class RecipeRestTemplate {
             logger.error("getRecipes()",ex);
             return Collections.emptyList();
         }
+    }
+
+    public RecipeDto getRecipe(int id){
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(baseUrl+"/api/recipe/"+id)
+                .encode()
+                .toUriString();
+
+        try {
+            return rest.getForObject(urlTemplate,RecipeDto.class);
+        }catch (RestClientException ex){
+            logger.error("getRecipes()",ex);
+            return null;
+        }
+
     }
 
 
