@@ -8,6 +8,8 @@ services:
       - "16686:16686"
     networks:
       - jaeger_net
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
 
   recipe_db:
     image: mysql:latest
