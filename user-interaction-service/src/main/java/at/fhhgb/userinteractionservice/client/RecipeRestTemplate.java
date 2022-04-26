@@ -29,7 +29,7 @@ public class RecipeRestTemplate {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     @Autowired
-    private RestTemplate rest ;
+    private RestTemplate rest;
 
     public List<RecipeDto> getRecipes(RecipeType recipeType)
     {

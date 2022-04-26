@@ -1,9 +1,11 @@
 package at.fhhgb.userinteractionservice.service.helper;
 
+import at.fhhgb.userinteractionservice.dto.RecipeCreationDto;
 import at.fhhgb.userinteractionservice.dto.RecipeDto;
 import at.fhhgb.userinteractionservice.dto.RecipeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -26,6 +28,7 @@ public class HtmlTemplateHelper {
         Context context = new Context();
         context.setVariable("type", recipeType.name());
         context.setVariable("recipes", recipes);
+        context.setVariable("recipeForm",new RecipeCreationDto());
 
         return templateEngine.process(HtmlTemplates.INDEX, context);
     }
