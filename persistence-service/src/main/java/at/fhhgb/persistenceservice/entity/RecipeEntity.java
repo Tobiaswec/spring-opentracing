@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity(name="recipies")
+@Entity(name = "recipies")
 public class RecipeEntity {
     @Id
     @GeneratedValue
@@ -25,17 +25,17 @@ public class RecipeEntity {
     @Column
     String description;
 
-    @Column
+    @Column(name = "url", length = 1000)
     String url;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 1000)
     String imageUrl;
 
-    @Column(name="type")
+    @Column(name = "type")
     String type;
 
-    @Column(name="date")
-    OffsetDateTime date=OffsetDateTime.now();
+    @Column(name = "date")
+    OffsetDateTime date = OffsetDateTime.now();
 
     public RecipeEntity() {
     }
