@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-<h1  style="font-size: 35px">SVE - Projekt 1</h1>
+<h1  style="font-size: 35px">Spring-Opentracing</h1>
 <h3>Julian Pichler</h3> 
 <h3>Tobias Wecht</h3>
 </div>
