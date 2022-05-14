@@ -34,8 +34,11 @@ public class RecipeController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     public ResponseEntity<RecipeEntity> getRecipe(@PathVariable(value="id")  int id){
 
-        return new ResponseEntity<>(recipeService.getRecipe(id).get(), HttpStatus.OK);
-
+        if(recipeService.getRecipe(id).isPresent()){
+            return new ResponseEntity<>(recipeService.getRecipe(id).get(), HttpStatus.OK);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
